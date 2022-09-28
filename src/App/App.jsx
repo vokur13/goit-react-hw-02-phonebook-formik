@@ -16,12 +16,11 @@ export class App extends Component {
     filter: '',
   };
 
-  formSubmitHandler = data => {
-    console.log(data);
+  formSubmitHandler = ({ name, number }) => {
     const contact = {
       id: nanoid(),
-      //       name,
-      //       number,
+      name,
+      number,
     };
 
     const checkName = this.state.contacts.some(item =>
