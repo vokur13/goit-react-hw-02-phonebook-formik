@@ -1,20 +1,26 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Box } from '../Box';
-import { Label, Input } from './ContactForm.styled';
+import { Label, Input, Error } from './ContactForm.styled';
 import { Button } from '../Button';
 
+let schema = yup.object().shape({
+  name: yup.string().required(),
+  number: yup.string().min(7).required(),
+});
+
 const initialValues = {
-  name: 'qwerty',
-  number: '12345',
+  name: '',
+  number: '',
 };
 
 export const ContactForm = () => {
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = (values, { resetForm }) => {
     console.log(values);
-    console.log(actions);
+    resetForm();
   };
 
   const nameId = nanoid();
@@ -54,7 +60,11 @@ export const ContactForm = () => {
       borderRadius="normal"
       boxShadow="basic"
     >
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={handleSubmit}
+      >
         <Form autoComplete="off">
           <Label htmlFor={nameId}>Name</Label>
           <Input
@@ -67,6 +77,7 @@ export const ContactForm = () => {
             //   value={name.value}
             //   onChange={handleChange}
           />
+          <Error component="div" name="name" />
           <Label htmlFor={numberID}>Number</Label>
           <Input
             type="tel"
@@ -78,6 +89,7 @@ export const ContactForm = () => {
             //   value={number}
             //   onChange={handleChange}
           />
+          <Error component="div" name="number" />
           {/* <Button type="submit" disabled={!this.state.name}> */}
           <Button type="submit">Add contact</Button>
         </Form>
