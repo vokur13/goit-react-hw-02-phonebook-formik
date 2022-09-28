@@ -20,10 +20,11 @@ const initialValues = {
 export const ContactForm = () => {
   const handleSubmit = (values, { resetForm }) => {
     console.log(values);
+    this.props.onSubmit(values);
     resetForm();
   };
 
-  const nameId = nanoid();
+  const nameID = nanoid();
   const numberID = nanoid();
 
   //   state = { name: '', number: '' };
@@ -46,10 +47,6 @@ export const ContactForm = () => {
   //         this.resetForm();
   //   };
 
-  //   resetForm = () => {
-  //     this.setState({ name: '', number: '' });
-  //   };
-
   return (
     <Box
       display="block"
@@ -66,11 +63,11 @@ export const ContactForm = () => {
         onSubmit={handleSubmit}
       >
         <Form autoComplete="off">
-          <Label htmlFor={nameId}>Name</Label>
+          <Label htmlFor={nameID}>Name</Label>
           <Input
             type="text"
             name="name"
-            id={nameId}
+            id={nameID}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
