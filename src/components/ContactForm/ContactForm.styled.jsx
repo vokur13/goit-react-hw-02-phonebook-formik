@@ -17,4 +17,5 @@ export const Input = styled(Field)`
 
 export const Error = styled(ErrorMessage)`
   color: ${props => props.theme.colors.red};
+  margin-bottom: ${props => `${props.theme.space[2]}px`};
 `;

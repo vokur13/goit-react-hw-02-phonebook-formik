@@ -12,40 +12,9 @@ let schema = yup.object().shape({
   number: yup.string().min(7).required(),
 });
 
-const initialValues = {
-  name: '',
-  number: '',
-};
-
 export const ContactForm = () => {
-  const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
-    this.props.onSubmit(values);
-    resetForm();
-  };
-
   const nameID = nanoid();
   const numberID = nanoid();
-
-  //   state = { name: '', number: '' };
-
-  //   handleChange = e => {
-  //     const { name, value } = e.target;
-  //     this.setState({ [name]: value });
-  //   };
-
-  //   checkChange = e => {
-  //     const { name } = e.target;
-  //     return !this.state[name] ? false : true;
-  //   };
-
-  //   const handleSubmit = e => {
-  //     e.preventDefault();
-  //     const { name, number } = e.target.elements;
-  //     console.log(name.value, number.value);
-  //     this.props.onSubmit({});
-  //         this.resetForm();
-  //   };
 
   return (
     <Box
@@ -58,11 +27,14 @@ export const ContactForm = () => {
       boxShadow="basic"
     >
       <Formik
-        initialValues={initialValues}
+        initialValues={{ name: '', number: '' }}
         validationSchema={schema}
-        onSubmit={handleSubmit}
+        onSubmit={(values, { resetForm }) => {
+          console.log(values);
+          resetForm();
+        }}
       >
-        <Form autoComplete="off">
+        <Form>
           <Label htmlFor={nameID}>Name</Label>
           <Input
             type="text"
@@ -70,9 +42,8 @@ export const ContactForm = () => {
             id={nameID}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            //   value={name.value}
-            //   onChange={handleChange}
+            //     value={name}
+            // onChange={this.handleChange}
           />
           <Error component="div" name="name" />
           <Label htmlFor={numberID}>Number</Label>
@@ -82,13 +53,14 @@ export const ContactForm = () => {
             id={numberID}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            //   value={number}
-            //   onChange={handleChange}
+            //     value={number}
+            //     onChange={this.handleChange}
           />
           <Error component="div" name="number" />
-          {/* <Button type="submit" disabled={!this.state.name}> */}
           <Button type="submit">Add contact</Button>
+          {/* <Button type="submit" disabled={!values}>
+            Add contact
+          </Button> */}
         </Form>
       </Formik>
     </Box>
