@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
@@ -12,9 +11,15 @@ let schema = yup.object().shape({
   number: yup.string().min(7).required(),
 });
 
-export const ContactForm = () => {
+const initialValues = { name: '', number: '' };
+
+export const ContactForm = ({ handleSubmit }) => {
   const nameID = nanoid();
   const numberID = nanoid();
+  handleSubmit = (values, { resetForm }) => {
+    console.log('values', values);
+    resetForm();
+  };
 
   return (
     <Box
@@ -27,12 +32,9 @@ export const ContactForm = () => {
       boxShadow="basic"
     >
       <Formik
-        initialValues={{ name: '', number: '' }}
+        initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={(values, { resetForm }) => {
-          console.log(values);
-          resetForm();
-        }}
+        onSubmit={handleSubmit}
       >
         <Form>
           <Label htmlFor={nameID}>Name</Label>
@@ -68,5 +70,5 @@ export const ContactForm = () => {
 };
 
 ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
