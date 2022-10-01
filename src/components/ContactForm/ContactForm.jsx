@@ -14,13 +14,11 @@ let schema = yup.object().shape({
 
 const initialValues = { name: '', number: '' };
 
-export const ContactForm = props => {
-  console.log(props);
-  props.onSubmit();
+export const ContactForm = ({ values }) => {
   const nameID = nanoid();
   const numberID = nanoid();
   const handleSubmit = (values, { resetForm }) => {
-    console.log('values', values);
+    //     console.log('values', values);
     resetForm();
   };
 
@@ -47,7 +45,7 @@ export const ContactForm = props => {
             id={nameID}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            //     value={name}
+            // value={name}
             // onChange={this.handleChange}
           />
           <Error component="div" name="name" />
@@ -73,5 +71,5 @@ export const ContactForm = props => {
 };
 
 ContactForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+  //   onSubmit: PropTypes.func.isRequired,
 };

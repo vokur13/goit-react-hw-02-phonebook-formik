@@ -70,8 +70,8 @@ export class App extends Component {
     return (
       <Box width={1} p={4} bg="bgBasic" as="main">
         <h1>Phonebook</h1>
-        {/* <ContactForm values={this.data} /> */}
-        <ContactForm onSubmit={this.formSubmitHandler} />
+        <ContactForm values={this.data} />
+        {/* <ContactForm onSubmit={this.formSubmitHandler} /> */}
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
