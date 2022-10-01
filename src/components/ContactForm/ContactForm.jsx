@@ -12,17 +12,15 @@ let schema = yup.object().shape({
   number: yup.string().min(7).required(),
 });
 
-const STORAGE_KEY = 'contacts';
 const initialValues = { name: '', number: '' };
 
-export const ContactForm = ({ handleSubmit }) => {
+export const ContactForm = props => {
+  console.log(props);
+  props.onSubmit();
   const nameID = nanoid();
   const numberID = nanoid();
-  handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
     console.log('values', values);
-    if (values) {
-      save(STORAGE_KEY, values);
-    }
     resetForm();
   };
 

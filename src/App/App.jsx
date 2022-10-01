@@ -6,8 +6,6 @@ import { ContactList } from '../components/ContactList';
 import { nanoid } from 'nanoid';
 import { load } from '../utils/storage';
 
-const STORAGE_KEY = 'contacts';
-
 export class App extends Component {
   state = {
     //     contacts: [
@@ -21,9 +19,9 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    if (load(STORAGE_KEY)) {
-      this.setState({ contacts: load(STORAGE_KEY) });
-    }
+    //     if (load(STORAGE_KEY)) {
+    //       this.setState({ contacts: load(STORAGE_KEY) });
+    //     }
   }
 
   formSubmitHandler = data => {
@@ -48,19 +46,15 @@ export class App extends Component {
   };
 
   changeFilter = e => {
-    if (load(STORAGE_KEY)) {
-      this.setState({ filter: e.target.value });
-    }
+    this.setState({ filter: e.target.value });
   };
 
   getFilteredItems = () => {
     const { contacts, filter } = this.state;
     const normilizedFilter = filter.toLowerCase();
-    if (load(STORAGE_KEY)) {
-      return contacts.filter(item =>
-        item.name.toLowerCase().includes(normilizedFilter)
-      );
-    }
+    return contacts.filter(item =>
+      item.name.toLowerCase().includes(normilizedFilter)
+    );
   };
 
   deleteItem = itemID => {
@@ -77,7 +71,7 @@ export class App extends Component {
       <Box width={1} p={4} bg="bgBasic" as="main">
         <h1>Phonebook</h1>
         {/* <ContactForm values={this.data} /> */}
-        <ContactForm handleSubmit={this.formSubmitHandler} />
+        <ContactForm onSubmit={this.formSubmitHandler} />
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
