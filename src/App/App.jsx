@@ -4,17 +4,27 @@ import { ContactForm } from '../components/ContactForm';
 import { Filter } from '../components/Filter';
 import { ContactList } from '../components/ContactList';
 import { nanoid } from 'nanoid';
+import { load } from '../utils/storage';
+
+const STORAGE_KEY = 'contacts';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    //     contacts: [
+    //       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    //       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    //       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    //       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    //     ],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    if (load(STORAGE_KEY)) {
+      this.setState({ contacts: load(STORAGE_KEY) });
+    }
+  }
 
   formSubmitHandler = data => {
     console.log('data', data);
@@ -38,15 +48,19 @@ export class App extends Component {
   };
 
   changeFilter = e => {
-    this.setState({ filter: e.target.value });
+    if (load(STORAGE_KEY)) {
+      this.setState({ filter: e.target.value });
+    }
   };
 
   getFilteredItems = () => {
     const { contacts, filter } = this.state;
     const normilizedFilter = filter.toLowerCase();
-    return contacts.filter(item =>
-      item.name.toLowerCase().includes(normilizedFilter)
-    );
+    if (load(STORAGE_KEY)) {
+      return contacts.filter(item =>
+        item.name.toLowerCase().includes(normilizedFilter)
+      );
+    }
   };
 
   deleteItem = itemID => {

@@ -5,12 +5,14 @@ import { nanoid } from 'nanoid';
 import { Box } from '../Box';
 import { Label, Input, Error } from './ContactForm.styled';
 import { Button } from '../Button';
+import { save } from '../../utils/storage';
 
 let schema = yup.object().shape({
   name: yup.string().required(),
   number: yup.string().min(7).required(),
 });
 
+const STORAGE_KEY = 'contacts';
 const initialValues = { name: '', number: '' };
 
 export const ContactForm = ({ handleSubmit }) => {
@@ -18,6 +20,9 @@ export const ContactForm = ({ handleSubmit }) => {
   const numberID = nanoid();
   handleSubmit = (values, { resetForm }) => {
     console.log('values', values);
+    if (values) {
+      save(STORAGE_KEY, values);
+    }
     resetForm();
   };
 
