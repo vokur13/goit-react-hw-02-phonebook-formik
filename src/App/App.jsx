@@ -21,6 +21,19 @@ export class App extends Component {
   };
 
   //   componentDidMount() {
+  //     const savedState = localStorage.getItem(STORAGE_KEY);
+  //     if (savedState) {
+  //       this.setState({ contacts: savedState });
+  //     }
+  //   }
+
+  //   componentDidUpdate(prevProps, prevState) {
+  //     if (prevState.contacts !== this.state.contacts) {
+  //       localStorage.setItem(STORAGE_KEY, this.state.contacts);
+  //     }
+  //   }
+
+  //   componentDidMount() {
   //     if (load(STORAGE_KEY)) {
   //       this.setState({ contacts: load(STORAGE_KEY) });
   //     }
