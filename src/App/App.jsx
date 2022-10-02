@@ -4,30 +4,38 @@ import { ContactForm } from '../components/ContactForm';
 import { Filter } from '../components/Filter';
 import { ContactList } from '../components/ContactList';
 import { nanoid } from 'nanoid';
-import { load } from '../utils/storage';
+import { save, load } from '../utils/storage';
+
+const STORAGE_KEY = 'contacts';
 
 export class App extends Component {
   state = {
-    //     contacts: [
-    //       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    //       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    //       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    //       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    //     ],
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    //     contacts: [],
     filter: '',
   };
 
-  componentDidMount() {
-    //     if (load(STORAGE_KEY)) {
-    //       this.setState({ contacts: load(STORAGE_KEY) });
-    //     }
-  }
+  //   componentDidMount() {
+  //     if (load(STORAGE_KEY)) {
+  //       this.setState({ contacts: load(STORAGE_KEY) });
+  //     }
+  //   }
 
-  formSubmitHandler = data => {
-    console.log('data', data);
-    const { name, number } = data;
-    //     console.log(name, number);
+  //   componentDidUpdate(prevProps, prevState) {
+  //     const nextContacts = this.state.contacts;
+  //     const prevContacts = prevState.contacts;
+
+  //     if (nextContacts !== prevContacts) {
+  //       save(STORAGE_KEY, 'contacts');
+  //     }
+  //   }
+
+  formSubmitHandler = ({ name, number }) => {
     const contact = {
       id: nanoid(),
       name,
@@ -70,8 +78,8 @@ export class App extends Component {
     return (
       <Box width={1} p={4} bg="bgBasic" as="main">
         <h1>Phonebook</h1>
-        <ContactForm values={this.data} />
-        {/* <ContactForm onSubmit={this.formSubmitHandler} /> */}
+        {/* <ContactForm values={this.data} /> */}
+        <ContactForm onSubmit={this.formSubmitHandler} />
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
