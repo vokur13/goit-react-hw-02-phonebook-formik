@@ -20,33 +20,18 @@ export class App extends Component {
     filter: '',
   };
 
-  //   componentDidMount() {
-  //     const savedState = localStorage.getItem(STORAGE_KEY);
-  //     if (savedState) {
-  //       this.setState({ contacts: savedState });
-  //     }
-  //   }
+  componentDidMount() {
+    if (load(STORAGE_KEY)) {
+      this.setState({ contacts: load(STORAGE_KEY) });
+    }
+  }
 
-  //   componentDidUpdate(prevProps, prevState) {
-  //     if (prevState.contacts !== this.state.contacts) {
-  //       localStorage.setItem(STORAGE_KEY, this.state.contacts);
-  //     }
-  //   }
-
-  //   componentDidMount() {
-  //     if (load(STORAGE_KEY)) {
-  //       this.setState({ contacts: load(STORAGE_KEY) });
-  //     }
-  //   }
-
-  //   componentDidUpdate(prevProps, prevState) {
-  //     const nextContacts = this.state.contacts;
-  //     const prevContacts = prevState.contacts;
-
-  //     if (nextContacts !== prevContacts) {
-  //       save(STORAGE_KEY, 'contacts');
-  //     }
-  //   }
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      save(STORAGE_KEY, contacts);
+    }
+  }
 
   formSubmitHandler = ({ name, number }) => {
     const contact = {
@@ -91,7 +76,6 @@ export class App extends Component {
     return (
       <Box width={1} p={4} bg="bgBasic" as="main">
         <h1>Phonebook</h1>
-        {/* <ContactForm values={this.data} /> */}
         <ContactForm onSubmit={this.formSubmitHandler} />
 
         <h2>Contacts</h2>
